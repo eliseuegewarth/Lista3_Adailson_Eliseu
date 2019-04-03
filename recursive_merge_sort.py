@@ -1,6 +1,7 @@
 
 
 def recursive_merge_sort(vector):
+    # Algoritmo de merge recursivo
     vector_size = len(vector)
     if vector_size == 1:
         pass
@@ -12,6 +13,7 @@ def recursive_merge_sort(vector):
     return vector
 
 def copy_merge(left, right):
+    # gera novo vetor mesclando o elementos das suas listas
     vector = []
     while(len(left) or len(right)):
         if len(left) and len(right):
