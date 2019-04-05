@@ -1,5 +1,5 @@
 # Lista 3
-Algoritmos de Ordenação O(n²)
+Algoritmos de Ordenação O(n*log(n))
 
 ## Alunos
 
