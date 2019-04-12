@@ -1,3 +1,4 @@
+#!/bin/python3
 import time
 import sys
 from gera_vector import gera_vector_rapido
@@ -56,5 +57,8 @@ if __name__ == '__main__':
             pass
         else:
             pass
+    elif(len(sys.argv) == 2):
+        if sys.argv[1] == "--help":
+            print("USAGE:\n\t{} <sort_strategy> <iterations_per_benchmark> <start_with_n_elements> <end_with_n_elements> <range_step> <new_benchmark>".format(sys.argv[0]))
     else:
         main()
