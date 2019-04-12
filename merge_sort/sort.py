@@ -4,6 +4,7 @@ import sys
 from gera_vector import gera_vector_rapido
 from benchmark import *
 from recursive_merge_sort import recursive_merge_sort
+from parallel_merge_sort import parallel_merge_sort
 
 def single_run(sort_strategy=recursive_merge_sort, sort_strategy_name='recursive_merge_sort', number_of_elements=100000, start_of_range=0, end_of_range=1000000):
     vector = gera_vector_rapido([start_of_range, end_of_range], number_of_elements)
@@ -31,10 +32,7 @@ def run_benchmark(sort_strategy=recursive_merge_sort, sort_strategy_name='recurs
             benchmark = single_run(sort_strategy, sort_strategy_name, number_of_elements)
             write_benchmark(
                 benchmark_file_path,
-                benchmark[0],
-                benchmark[1],
-                benchmark[2],
-                benchmark[3],
+                benchmark
                 )
 
 def main():
