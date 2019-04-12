@@ -50,6 +50,8 @@ if __name__ == '__main__':
     if (len(sys.argv) == 6):
         if sys.argv[1] == 'recursive_merge_sort':
             run_benchmark(recursive_merge_sort, sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5], False)
+        elif sys.argv[1] == 'parallel_merge_sort':
+            run_benchmark(parallel_merge_sort, sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5], False)
         elif sys.argv[1] == 'iterative_merge_sort':
             # run_benchmark(iterative_merge_sort, "iterative_merge_sort", sys.argv[3], sys.argv[4], sys.argv[5], sys.argv[6], False)
             pass
