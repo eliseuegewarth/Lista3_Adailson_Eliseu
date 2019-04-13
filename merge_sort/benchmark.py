@@ -1,9 +1,9 @@
 
-def clear_benchmark_file(benchmark_file_path):
+def clear_file(benchmark_file_path):
     with open(benchmark_file_path, "w+") as file:
         file.write("{}, {}, {}, {}\n".format("strategy", "dataset_size", "time_in_ms", "is_random"))
 
-def write_benchmark(benchmark_file_path, dataset=[]):
+def write(benchmark_file_path, dataset=[]):
     if dataset != []:
         with open(benchmark_file_path, "a+") as file:
             for i in dataset:
