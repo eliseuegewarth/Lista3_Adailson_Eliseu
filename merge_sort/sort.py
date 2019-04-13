@@ -16,7 +16,7 @@ def single_run(sort_strategy=recursive_merge_sort, sort_strategy_name='recursive
     return [sort_strategy_name, len(vector), time_in_ms, True]
 
 def run_benchmark(sort_strategy=recursive_merge_sort, sort_strategy_name='recursive_merge_sort', iterations_per_benchmark=100, start_with_n_elements=100, end_with_n_elements=100000, range_step=10000, new_benchmark=False):
-    benchmark_file_path = "benchmark_merge_sort{}_{}.csv".format(start_with_n_elements, end_with_n_elements)
+    benchmark_file_path = "benchmark_{}_{}_{}.csv".format(sort_strategy_name, start_with_n_elements, end_with_n_elements)
     start_with_n_elements = int(start_with_n_elements)
     end_with_n_elements = int(end_with_n_elements)
     range_step = int(range_step)
