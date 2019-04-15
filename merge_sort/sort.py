@@ -19,6 +19,8 @@ def run_benchmark(sort_strategy=merge_sort, sort_strategy_name='merge_sort', ite
     benchmark_file_path = "tests_{}_{}_{}.csv".format(sort_strategy_name, start_with_n_elements, end_with_n_elements)
     if new_benchmark or not isfile(benchmark_file_path):
         benchmark.clear_file(benchmark_file_path)
+    else:
+        pass
     start_with_n_elements = int(start_with_n_elements)
     end_with_n_elements = int(end_with_n_elements)
     range_step = int(range_step)
@@ -28,8 +30,6 @@ def run_benchmark(sort_strategy=merge_sort, sort_strategy_name='merge_sort', ite
         raise Exception("\nThe step range be in [start-end] interval.\n")
     for i in range(int(iterations_per_benchmark)):
         tests = []
-        else:
-            pass
         for number_of_elements in range(start_with_n_elements, end_with_n_elements+1, range_step):
             single_test = run_test(sort_strategy, sort_strategy_name, number_of_elements)
             tests.append(single_test)
