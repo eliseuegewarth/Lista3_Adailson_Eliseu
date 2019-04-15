@@ -56,22 +56,14 @@ if __name__ == '__main__':
         df_median = sort_by_columns(df_median, ['dataset_size','time_in_ms'])
         df_medians.append(df_median)
     dfs = file_dfs
-    # for df in file_dfs:
-    #     slice_in = len(df)//1000
-    #     for i in range(slice_in):
-    #         slice_limit = (len(df)//slice_in)
-    #         dfs.append(df.iloc[i*slice_limit:(i+1)*slice_limit, :])
-    # dfs = file_dfs[0]
-    # for df in file_dfs[1:]:
-    #     dfs = dfs + df
+    x_medians_meeting = 0
+    y_medians_meeting = 0
     for i in range(len(df_medians[0])):
         if df_medians[0].iloc[i][2] < df_medians[1].iloc[i][2]:
             x_medians_meeting = df_medians[0].iloc[i][1]
             y_medians_meeting = df_medians[0].iloc[i][2]
             break
     ax = plot_benchmark(dataframes=dfs+df_medians)
-    # df_median.plot(kind='line', x='dataset_size', y='time_in_ms', color='k', ax=ax)
-    ax.legend([df.strategy.unique()[0] for df in dfs+df_medians])
     ax.plot(x_medians_meeting, y_medians_meeting, 'ko')
-    # plt.xticks([x for x in range(0, int(df_median.dataset_size.unique()[-1]*1.1), 10000)])
+    ax.legend([df.strategy.unique()[0] for df in dfs+df_medians]+ ['crosspoint'])
     plt.show()
