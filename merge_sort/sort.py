@@ -4,7 +4,7 @@ import sys
 from os.path import isfile
 from gera_vector import gera_vector_rapido
 import benchmark
-from recursive_merge_sort import merge_sort
+from recursive_merge_sort import recursive_merge_sort as merge_sort
 from parallel_merge_sort import parallel_merge_sort
 
 def run_test(sort_strategy=merge_sort, sort_strategy_name='merge_sort', number_of_elements=100000, start_of_range=0, end_of_range=1000000):
