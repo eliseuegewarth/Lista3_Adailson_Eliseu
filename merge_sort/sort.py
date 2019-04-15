@@ -16,7 +16,7 @@ def single_run(sort_strategy=recursive_merge_sort, sort_strategy_name='recursive
     return [sort_strategy_name, len(vector), time_in_ms, True]
 
 def run_benchmark(sort_strategy=recursive_merge_sort, sort_strategy_name='recursive_merge_sort', iterations_per_benchmark=100, start_with_n_elements=100, end_with_n_elements=100000, range_step=10000, new_benchmark=False):
-    benchmark_file_path = "benchmark_{}_{}_{}.csv".format(sort_strategy_name, start_with_n_elements, end_with_n_elements)
+    benchmark_file_path = "tests_{}_{}_{}.csv".format(sort_strategy_name, start_with_n_elements, end_with_n_elements)
     start_with_n_elements = int(start_with_n_elements)
     end_with_n_elements = int(end_with_n_elements)
     range_step = int(range_step)
@@ -26,7 +26,6 @@ def run_benchmark(sort_strategy=recursive_merge_sort, sort_strategy_name='recurs
         raise Exception("\nThe step range be in [start-end] interval.\n")
     for number_of_elements in range(start_with_n_elements, end_with_n_elements, range_step):
         tests = []
-        benchmark_file_path = "benchmark_merge_sort{}.csv".format(number_of_elements)
         if new_benchmark or not isfile(benchmark_file_path):
             benchmark.clear_file(benchmark_file_path)
         else:
@@ -53,9 +52,9 @@ def main():
 if __name__ == '__main__':
     if (len(sys.argv) >= 6):
         if sys.argv[1] == 'recursive_merge_sort':
-            run_benchmark(recursive_merge_sort, sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5], False if sys.argv[6] == "False" else True)
+            run_benchmark(recursive_merge_sort, sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5], True if sys.argv[6] == "True" else False)
         elif sys.argv[1] == 'parallel_merge_sort':
-            run_benchmark(parallel_merge_sort, sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5], False if sys.argv[6] == "False" else True)
+            run_benchmark(parallel_merge_sort, sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5], True if sys.argv[6] == "True" else False)
         elif sys.argv[1] == 'iterative_merge_sort':
             # run_benchmark(iterative_merge_sort, "iterative_merge_sort", sys.argv[3], sys.argv[4], sys.argv[5], sys.argv[6], False if sys.argv[6] == "False" else True)
             pass
@@ -64,8 +63,10 @@ if __name__ == '__main__':
     elif(len(sys.argv) == 2):
         if sys.argv[1] == "--test":
             single_test = single_run(number_of_elements=100000)
-        print("{} elementos em {} ms".format(single_test[1], single_test[2]))
+            print("{} elementos em {} ms".format(single_test[1], single_test[2]))
         elif sys.argv[1] == "--get-info":
             main()
+        elif sys.argv[1] == "--help":
+            print("USAGE:\n\t{} <sort_strategy> <iterations_per_benchmark> <start_with_n_elements> <end_with_n_elements> <range_step> <new_benchmark>".format(sys.argv[0]))
     else:
         print("USAGE:\n\t{} <sort_strategy> <iterations_per_benchmark> <start_with_n_elements> <end_with_n_elements> <range_step> <new_benchmark>".format(sys.argv[0]))
