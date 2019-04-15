@@ -7,7 +7,7 @@ import benchmark
 from recursive_merge_sort import recursive_merge_sort
 from parallel_merge_sort import parallel_merge_sort
 
-def single_run(sort_strategy=recursive_merge_sort, sort_strategy_name='recursive_merge_sort', number_of_elements=100000, start_of_range=0, end_of_range=1000000):
+def run_test(sort_strategy=recursive_merge_sort, sort_strategy_name='recursive_merge_sort', number_of_elements=100000, start_of_range=0, end_of_range=1000000):
     vector = gera_vector_rapido([start_of_range, end_of_range], number_of_elements)
     start = time.time()
     vector = sort_strategy(vector)
@@ -17,6 +17,8 @@ def single_run(sort_strategy=recursive_merge_sort, sort_strategy_name='recursive
 
 def run_benchmark(sort_strategy=recursive_merge_sort, sort_strategy_name='recursive_merge_sort', iterations_per_benchmark=100, start_with_n_elements=100, end_with_n_elements=100000, range_step=10000, new_benchmark=False):
     benchmark_file_path = "tests_{}_{}_{}.csv".format(sort_strategy_name, start_with_n_elements, end_with_n_elements)
+    if new_benchmark or not isfile(benchmark_file_path):
+        benchmark.clear_file(benchmark_file_path)
     start_with_n_elements = int(start_with_n_elements)
     end_with_n_elements = int(end_with_n_elements)
     range_step = int(range_step)
@@ -24,14 +26,12 @@ def run_benchmark(sort_strategy=recursive_merge_sort, sort_strategy_name='recurs
         raise Exception("\nEnd must be greater than start.\n")
     elif range_step >= (end_with_n_elements-start_with_n_elements) :
         raise Exception("\nThe step range be in [start-end] interval.\n")
-    for number_of_elements in range(start_with_n_elements, end_with_n_elements, range_step):
+    for i in range(int(iterations_per_benchmark)):
         tests = []
-        if new_benchmark or not isfile(benchmark_file_path):
-            benchmark.clear_file(benchmark_file_path)
         else:
             pass
-        for i in range(int(iterations_per_benchmark)):
-            single_test = single_run(sort_strategy, sort_strategy_name, number_of_elements)
+        for number_of_elements in range(start_with_n_elements, end_with_n_elements, range_step):
+            single_test = run_test(sort_strategy, sort_strategy_name, number_of_elements)
             tests.append(single_test)
         benchmark.write(
                 benchmark_file_path,
@@ -46,7 +46,7 @@ def main():
         pass
     else:
         elementos = int(input("Deseja ordenar quantos elementos?"))
-        single_test = single_run()
+        single_test = run_test()
         print("{} elementos em {} ms".format(single_test[1], single_test[2]))
 
 if __name__ == '__main__':
@@ -62,7 +62,7 @@ if __name__ == '__main__':
             pass
     elif(len(sys.argv) == 2):
         if sys.argv[1] == "--test":
-            single_test = single_run(number_of_elements=100000)
+            single_test = run_test(number_of_elements=100000)
             print("{} elementos em {} ms".format(single_test[1], single_test[2]))
         elif sys.argv[1] == "--get-info":
             main()
