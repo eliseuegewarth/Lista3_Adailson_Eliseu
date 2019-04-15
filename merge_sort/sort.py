@@ -4,10 +4,10 @@ import sys
 from os.path import isfile
 from gera_vector import gera_vector_rapido
 import benchmark
-from recursive_merge_sort import recursive_merge_sort
+from recursive_merge_sort import merge_sort
 from parallel_merge_sort import parallel_merge_sort
 
-def run_test(sort_strategy=recursive_merge_sort, sort_strategy_name='recursive_merge_sort', number_of_elements=100000, start_of_range=0, end_of_range=1000000):
+def run_test(sort_strategy=merge_sort, sort_strategy_name='merge_sort', number_of_elements=100000, start_of_range=0, end_of_range=1000000):
     vector = gera_vector_rapido([start_of_range, end_of_range], number_of_elements)
     start = time.time()
     vector = sort_strategy(vector)
@@ -15,7 +15,7 @@ def run_test(sort_strategy=recursive_merge_sort, sort_strategy_name='recursive_m
     time_in_ms = (int(1000*1000*(end-start)))/1000
     return [sort_strategy_name, len(vector), time_in_ms, True]
 
-def run_benchmark(sort_strategy=recursive_merge_sort, sort_strategy_name='recursive_merge_sort', iterations_per_benchmark=100, start_with_n_elements=100, end_with_n_elements=100000, range_step=10000, new_benchmark=False):
+def run_benchmark(sort_strategy=merge_sort, sort_strategy_name='merge_sort', iterations_per_benchmark=100, start_with_n_elements=100, end_with_n_elements=100000, range_step=10000, new_benchmark=False):
     benchmark_file_path = "tests_{}_{}_{}.csv".format(sort_strategy_name, start_with_n_elements, end_with_n_elements)
     if new_benchmark or not isfile(benchmark_file_path):
         benchmark.clear_file(benchmark_file_path)
@@ -30,7 +30,7 @@ def run_benchmark(sort_strategy=recursive_merge_sort, sort_strategy_name='recurs
         tests = []
         else:
             pass
-        for number_of_elements in range(start_with_n_elements, end_with_n_elements, range_step):
+        for number_of_elements in range(start_with_n_elements, end_with_n_elements+1, range_step):
             single_test = run_test(sort_strategy, sort_strategy_name, number_of_elements)
             tests.append(single_test)
         benchmark.write(
@@ -52,7 +52,7 @@ def main():
 if __name__ == '__main__':
     if (len(sys.argv) >= 6):
         if sys.argv[1] == 'recursive_merge_sort':
-            run_benchmark(recursive_merge_sort, sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5], True if sys.argv[6] == "True" else False)
+            run_benchmark(merge_sort, sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5], True if sys.argv[6] == "True" else False)
         elif sys.argv[1] == 'parallel_merge_sort':
             run_benchmark(parallel_merge_sort, sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5], True if sys.argv[6] == "True" else False)
         elif sys.argv[1] == 'iterative_merge_sort':
