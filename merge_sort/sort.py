@@ -46,7 +46,7 @@ def main():
         pass
     else:
         elementos = int(input("Deseja ordenar quantos elementos?"))
-        single_test = run_test()
+        single_test = run_test(number_of_elements=elementos)
         print("{} elementos em {} ms".format(single_test[1], single_test[2]))
 
 if __name__ == '__main__':
