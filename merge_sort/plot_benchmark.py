@@ -49,7 +49,7 @@ if __name__ == '__main__':
         df = get_dataset(file)
         df = sort_by_columns(df, ['dataset_size','time_in_ms'])
         for i in range(df.dataset_size.unique().size):
-            median_of = "{}_median".format(df.strategy.unique()[0])
+            median_of = "{}_median".format("_".join(file.split('_')[1:8]))
             df_median.append([median_of, df.dataset_size.unique()[i], np.median(df[df.dataset_size == df.dataset_size.unique()[i]].iloc[:,2].values), True])
         file_dfs.append(df)
         df_median = pd.DataFrame(df_median, columns=["strategy", "dataset_size", "time_in_ms", "is_random"])
