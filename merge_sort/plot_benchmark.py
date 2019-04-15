@@ -2,6 +2,8 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
 import sys
+from os import listdir
+from os.path import isfile, join
 
 def get_dataset(dataset_file_name):
     df = pd.read_csv(dataset_file_name, skipinitialspace=True)
@@ -29,9 +31,15 @@ def plot_benchmark(dataframes, *args):
 
 if __name__ == '__main__':
     files = []
+    # import ipdb;ipdb.set_trace()
     if len(sys.argv) > 1:
-        for y in sys.argv[1:]:
-            files.append(y)
+        if sys.argv[1] == '__all__':
+            mypath = "."
+            extension = ".csv"
+            files = [f for f in listdir(mypath) if (isfile(join(mypath, f)) and extension in f)]
+        else:
+            for y in sys.argv[1:]:
+                files.append(str(y))
     else:
         files.append('benchmark_recursive_merge_sort.csv')
     file_dfs = []
@@ -40,15 +48,19 @@ if __name__ == '__main__':
         df = get_dataset(file)
         df = sort_by_columns(df, ['dataset_size','time_in_ms'])
         for i in range(df.dataset_size.unique().size):
-            df_median.append(['recursive_merge_sort', df.dataset_size.unique()[i], np.median(df[df.dataset_size == df.dataset_size.unique()[i]].iloc[:,2].values), True])
+            df_median.append(['sort_strategy', df.dataset_size.unique()[i], np.median(df[df.dataset_size == df.dataset_size.unique()[i]].iloc[:,2].values), True])
         file_dfs.append(df)
     df_median = pd.DataFrame(df_median, columns=["strategy", "dataset_size", "time_in_ms", "is_random"])
+    df_median = sort_by_columns(df_median, ['dataset_size','time_in_ms'])
     dfs = []
     for df in file_dfs:
         slice_in = len(df)//1000
         for i in range(slice_in):
             slice_limit = (len(df)//slice_in)
             dfs.append(df.iloc[i*slice_limit:(i+1)*slice_limit, :])
+    # dfs = file_dfs[0]
+    # for df in file_dfs[1:]:
+    #     dfs = dfs + df
     ax = plot_benchmark(dataframes=dfs)
     df_median.plot(kind='line', x='dataset_size', y='time_in_ms', color='k', ax=ax)
     plt.xticks([x for x in range(0, int(df.dataset_size.unique()[-1]*1.1), 10000)])
