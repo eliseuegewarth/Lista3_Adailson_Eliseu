@@ -1,6 +1,6 @@
 import multiprocessing
-from recursive_merge_sort import copy_merge as merge
-from recursive_merge_sort import recursive_merge_sort as merge_sort
+from .recursive_merge_sort import copy_merge as merge
+from .recursive_merge_sort import recursive_merge_sort as merge_sort
 
 
 def parallel_merge_sort(vector, count_slice=0, self_id=1, return_dict=None):
