@@ -6,6 +6,7 @@ from gera_vector import gera_vector_rapido
 import benchmark
 from merge_sort.recursive_merge_sort import recursive_merge_sort as merge_sort
 from merge_sort.parallel_merge_sort import parallel_merge_sort
+from bucket_sort.bucket_sort import iterative_bucket_sort
 
 def run_test(sort_strategy=merge_sort, sort_strategy_name='merge_sort', number_of_elements=100000, start_of_range=0, end_of_range=1000000):
     vector = gera_vector_rapido([start_of_range, end_of_range], number_of_elements)
@@ -55,6 +56,8 @@ if __name__ == '__main__':
             run_benchmark(merge_sort, sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5], True if sys.argv[6] == "True" else False)
         elif sys.argv[1] == 'parallel_merge_sort':
             run_benchmark(parallel_merge_sort, sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5], True if sys.argv[6] == "True" else False)
+        elif sys.argv[1] == 'iterative_bucket_sort':
+            # run_benchmark(iterative_bucket_sort, "iterative_bucket_sort" , sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5], False if sys.argv[6] == "False" else True)   
         elif sys.argv[1] == 'iterative_merge_sort':
             # run_benchmark(iterative_merge_sort, "iterative_merge_sort", sys.argv[3], sys.argv[4], sys.argv[5], sys.argv[6], False if sys.argv[6] == "False" else True)
             pass

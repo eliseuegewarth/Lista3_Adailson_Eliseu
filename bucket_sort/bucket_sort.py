@@ -8,7 +8,7 @@ def insertionSort(vector):
 		vector[j + 1] = up	 
 	return vector
 			
-def bucketSort(vector): 
+def iterative_bucket_sort(vector): 
 	arr = [] 
 	number_buckets = 10
 	for i in range(number_buckets): 
@@ -31,8 +31,3 @@ def bucketSort(vector):
 			vector[k] = arr[i][j] 
 			k += 1
 	return vector
-
-vector = [2000, 1999, 1988, 
-	1958, 1980, 1985, 5, 500, 900, 100, 501, 50000,0] 
-print("Sorted Array is") 
-print(bucketSort(vector)) 
