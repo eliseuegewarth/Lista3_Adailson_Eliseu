@@ -14,8 +14,13 @@ def bucketSort(vector):
 	for i in range(number_buckets): 
 		arr.append([]) 
 		
-	for j in  range(0, len(vector)): 
-		arr[int((vector[j]-min(vector))/10)].append(vector[j])
+	for j in  range(0, len(vector)):
+		str_vec = str(vector[j])
+		dif = len(str(max(vector))) - len(str(vector[j]))
+		str_vec = '0' * dif + str_vec
+		#print(str_vec)
+		sig = int(str_vec[0])
+		arr[sig].append(vector[j])
 	
 	for i in range(number_buckets): 
 		arr[i] = insertionSort(arr[i]) 
@@ -28,6 +33,6 @@ def bucketSort(vector):
 	return vector
 
 vector = [2000, 1999, 1988, 
-	1958, 1980, 1985] 
+	1958, 1980, 1985, 5, 500, 900, 100, 501, 50000,0] 
 print("Sorted Array is") 
 print(bucketSort(vector)) 
