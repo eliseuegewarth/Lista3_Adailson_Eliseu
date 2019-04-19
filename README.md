@@ -1,29 +1,40 @@
 # Lista 3
 Algoritmos de Ordenação O(n*log(n))  
+
 ## Alunos  
 | Nome                  | Matrícula           | Github              |  
 |--|-----------------------|---------------------|  
 | Adailson Pinho dos Santos | 13/0140724 | [adailson2](https://github.com/adailson2) |  
 | Eliseu Egewarth | 12/0029693 | [eliseuegewarth](https://github.com/eliseuegewarth) |  
+
 ## Algoritmos implementados
 - [x] recursive_merge_sort  
+	
 	Faz o uso da recursividade para executar a ordenação dos elementos.
+
 - [ ] iterative_merge_sort  
+	
 	Faz o uso da iteratividade para executar a ordenação dos elementos.
+	
 - [x] parallel_merge_sort  
+
 	Faz o uso da estratégia de mergeSort recursivo utilizando o paralelismo computacional em máquinas com mais de um núcleo de processamento.
+	
 - [ ] quick_sort
+
 	Faz o uso da recursividade para executar a ordenação dos elementos.
 	Por conta da recursividade e da implementação original levar o último elemento como pivot, o pior caso O(n²) pode atingir o limit de recursões da máquina.
 	Para casos de vetores que possam estar totalmente ordenados, a situação citada foi observada para 50.000, que para o volume de dados das aplicações atuais um número pequeno.
-- [x] iterative_bucket_sort/
-	DESCRIÇÃO AQUI
+	
+- [x] iterative_bucket_sort
+
+	Realiza a iteração do método de ordenação dos elementos em baldes. Após baldes definidos, é feito o uso do método Selection Sort para cada balde.
 
 ## Estrutura do repositório
 - merge_sort/  
 	Implementações do algoritmo merge_sort
 - bucket_sort/  
-	Implementações do algoritmo bucket_sort
+	Foi utilizado como refência o link (https://www.geeksforgeeks.org/bucket-sort-2/) e aprimorado para a utilização de valores inteiros e com vários dígitos.
 - performance_report/  
 	Resultado dos testes de performance dos algoritmos (arquivos CSV)
 
