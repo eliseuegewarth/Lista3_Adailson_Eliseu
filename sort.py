@@ -7,13 +7,44 @@ import benchmark
 from merge_sort.recursive_merge_sort import recursive_merge_sort as merge_sort
 from merge_sort.parallel_merge_sort import parallel_merge_sort
 from bucket_sort.bucket_sort import iterative_bucket_sort
+# from quick_sort.quick_sort import quick_sort # need to use another sort strategy
+
+strategies = {
+    'merge_sort': merge_sort
+    ,
+    'parallel_merge_sort': parallel_merge_sort
+    ,
+    'iterative_bucket_sort': iterative_bucket_sort,
+    # 'quick_sort': quick_sort
+}
+
+def usage():
+    usage_text = """USAGE
+    {} <sort_strategy> <iterations_per_benchmark> <start_with_n_elements> <end_with_n_elements> <range_step> <new_benchmark>\n""".format(sys.argv[0])
+    usage_text = usage_text + """OPTIONS
+    --help\t\t\tShow this usage text
+    --test\t\t\tInterative mode
+    --probe\t\t\tRun merge sort with 100.000 randomic elements""" + """
+    sort_strategy\t\tSelect one of sort methods\n"""
+    for st in strategies.keys():
+        usage_text = usage_text + "\t\t\t\t{}\n".format(st)
+    usage_text = usage_text + """    iterations_per_benchmark\tNumber of tests with same vector length
+    start_with_n_elements\tInitial number of elements (Must be greater than 1)
+    end_with_n_elements\t\tFinal number of elements  (Must be greater than start_with_n_elements)
+    range_step\t\t\tNumber of elements is increased in range_step per iteration (Must be in [end_with_n_elements, start_with_n_elements] interval)
+    new_benchmark\t\tIf True recriate the benchmark file
+    """
+    return usage_text
+
+def time_to_ms(time):
+    return (int(1000*1000*time))/1000 # Use int() to truncate value in microseconds
 
 def run_test(sort_strategy=merge_sort, sort_strategy_name='merge_sort', number_of_elements=100000, start_of_range=0, end_of_range=1000000):
     vector = gera_vector_rapido([start_of_range, end_of_range], number_of_elements)
     start = time.time()
     vector = sort_strategy(vector)
     end = time.time()
-    time_in_ms = (int(1000*1000*(end-start)))/1000
+    time_in_ms = time_to_ms((end-start))
     return [sort_strategy_name, len(vector), time_in_ms, True]
 
 def run_benchmark(sort_strategy=merge_sort, sort_strategy_name='merge_sort', iterations_per_benchmark=100, start_with_n_elements=100, end_with_n_elements=100000, range_step=10000, new_benchmark=False):
@@ -50,26 +81,32 @@ def main():
         single_test = run_test(number_of_elements=elementos)
         print("{} elementos em {} ms".format(single_test[1], single_test[2]))
 
+def get_sort_strategy(sort_strategy_name):
+    sort_strategy = None
+    for sort in strategies:
+        if sort_strategy_name == sort:
+            sort_strategy = strategies[sort]
+    if sort_strategy == None:
+        raise Exception("\nInvalid sort_strategy argument.\n")
+    return sort_strategy
+
 if __name__ == '__main__':
     if (len(sys.argv) >= 6):
-        if sys.argv[1] == 'recursive_merge_sort':
-            run_benchmark(merge_sort, sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5], True if sys.argv[6] == "True" else False)
-        elif sys.argv[1] == 'parallel_merge_sort':
-            run_benchmark(parallel_merge_sort, sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5], True if sys.argv[6] == "True" else False)
-        elif sys.argv[1] == 'iterative_bucket_sort':
-            # run_benchmark(iterative_bucket_sort, "iterative_bucket_sort" , sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5], False if sys.argv[6] == "False" else True)   
-        elif sys.argv[1] == 'iterative_merge_sort':
-            # run_benchmark(iterative_merge_sort, "iterative_merge_sort", sys.argv[3], sys.argv[4], sys.argv[5], sys.argv[6], False if sys.argv[6] == "False" else True)
-            pass
-        else:
-            pass
+        sort_strategy_name = sys.argv[1]
+        sort_strategy = get_sort_strategy(sort_strategy_name)
+        iterations_per_benchmark = sys.argv[2]
+        start_with_n_elements = sys.argv[3]
+        end_with_n_elements = sys.argv[4]
+        range_step = sys.argv[5]
+        new_benchmark = True if sys.argv[6] == "True" else False
+        run_benchmark(sort_strategy, sort_strategy_name, iterations_per_benchmark, start_with_n_elements, end_with_n_elements, range_step, new_benchmark)
     elif(len(sys.argv) == 2):
-        if sys.argv[1] == "--test":
+        if sys.argv[1] == "--probe":
             single_test = run_test(number_of_elements=100000)
             print("{} elementos em {} ms".format(single_test[1], single_test[2]))
-        elif sys.argv[1] == "--get-info":
+        elif sys.argv[1] == "--test":
             main()
         elif sys.argv[1] == "--help":
-            print("USAGE:\n\t{} <sort_strategy> <iterations_per_benchmark> <start_with_n_elements> <end_with_n_elements> <range_step> <new_benchmark>".format(sys.argv[0]))
+            print(usage())
     else:
-        print("USAGE:\n\t{} <sort_strategy> <iterations_per_benchmark> <start_with_n_elements> <end_with_n_elements> <range_step> <new_benchmark>".format(sys.argv[0]))
+        print(usage())
