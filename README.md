@@ -42,13 +42,23 @@ Algoritmos de Ordenação O(n*log(n))
 O projeto usa Python 3 e as bibliotecas utilizadas estão listadas no arquivo `requirements.txt`.  
 A biblioteca `matplotlib` utilizada para plotar os resultados dos testes de performance depende do pacote `python3-tk` para linux.
 
+## Instruções de uso
+
+Execute o comando abaixo para baixar as dependências necessárias: 
+```
+$ pip3 install -r requirements.txt
+```
+Feito isso, rode o comando abaixo para mostrar no terminal quais dados de entradas são necessários para o funcionamento do algoritmo:
+```
+$ python3 sort.py
+```
 ## Análise de performance dos algoritmos
 Junto ao código dos algoritmos de ordenação, também estão dispostos neste repositório alguns códigos auxiliares como os algoritmos relacionados a testes de performance.  
 A escrita desses testes segue um padrão que pode ser observado nos arquivos de resultados.  
 Os resultados das análises estão armazenados no diretório `performance_report`.  
 Para analisar os dados graficamente, basta executar o comando abaixo:
 ```
-python3 plot_benchmark.py $(ls performance_report/*.csv)
+$ python3 plot_benchmark.py $(ls performance_report/*.csv)
 ```
 ## Outros algoritmos neste repositório
 - benchmark.py
