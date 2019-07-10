@@ -6,7 +6,7 @@ from gera_vector import gera_vector_rapido
 import benchmark
 from merge_sort.recursive_merge_sort import recursive_merge_sort as merge_sort
 from merge_sort.parallel_merge_sort import parallel_merge_sort
-from bucket_sort.bucket_sort import iterative_bucket_sort
+from bucket_sort.bucket_sort import bucket_sort
 # from quick_sort.quick_sort import quick_sort # need to use another sort strategy
 
 strategies = {
@@ -14,7 +14,7 @@ strategies = {
     ,
     'parallel_merge_sort': parallel_merge_sort
     ,
-    'iterative_bucket_sort': iterative_bucket_sort,
+    'bucket_sort': bucket_sort,
     # 'quick_sort': quick_sort
 }
 
