@@ -1,33 +1,19 @@
-def insertionSort(vector): 
-	for i in range(1, len(vector)): 
-		up = vector[i] 
-		j = i - 1
-		while j >=0 and vector[j] > up: 
-			vector[j + 1] = vector[j] 
-			j -= 1
-		vector[j + 1] = up	 
-	return vector
-			
-def iterative_bucket_sort(vector): 
-	arr = [] 
-	number_buckets = 10
-	for i in range(number_buckets): 
-		arr.append([]) 
-		
-	for j in  range(0, len(vector)):
-		str_vec = str(vector[j])
-		dif = len(str(max(vector))) - len(str(vector[j]))
-		str_vec = '0' * dif + str_vec
-		#print(str_vec)
-		sig = int(str_vec[0])
-		arr[sig].append(vector[j])
-	
-	for i in range(number_buckets): 
-		arr[i] = insertionSort(arr[i]) 
-		
-	k = 0
-	for i in range(number_buckets): 
-		for j in range(len(arr[i])): 
-			vector[k] = arr[i][j] 
-			k += 1
-	return vector
+def bucket_sort(vector=None):
+    if len(vector) < 2:
+        pass
+    else:
+        i = vector[len(vector)//2] # Apply M.o.M. to better performance
+        first_part = []
+        median_part = []
+        last_part = []
+        for y in vector:
+            if y > i:
+                last_part.append(y)
+            elif y == i:
+                median_part.append(y)
+            else:
+                first_part.append(y)
+        first_part = bucket_sort(first_part)
+        last_part = bucket_sort(last_part)
+        vector = first_part + median_part + last_part
+    return vector
